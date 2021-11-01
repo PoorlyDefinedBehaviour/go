@@ -276,6 +276,11 @@ redo:
 			s.op, s.prec = OrOr, precOrOr
 			s.tok = _Operator
 			break
+		} else if s.ch == '>' {
+			s.nextch()
+			s.op, s.prec = Pipe, precMul
+			s.tok = _Pipe
+			break
 		}
 		s.op, s.prec = Or, precAdd
 		goto assignop

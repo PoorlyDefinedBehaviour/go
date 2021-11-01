@@ -24,6 +24,7 @@ const (
 	_Assign   // =
 	_Define   // :=
 	_Arrow    // <-
+	_Pipe     // |>
 	_Star     // *
 
 	// delimiters
@@ -131,10 +132,11 @@ const (
 	Geq // >=
 
 	// precAdd
-	Add // +
-	Sub // -
-	Or  // |
-	Xor // ^
+	Add  // +
+	Sub  // -
+	Or   // |
+	Xor  // ^
+	Pipe // |>
 
 	// precMul
 	Mul    // *

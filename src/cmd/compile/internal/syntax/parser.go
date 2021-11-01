@@ -758,15 +758,25 @@ func (p *parser) binaryExpr(x Expr, prec int) Expr {
 	if x == nil {
 		x = p.unaryExpr()
 	}
-	for (p.tok == _Operator || p.tok == _Star) && p.prec > prec {
-		t := new(Operation)
-		t.pos = p.pos()
-		t.Op = p.op
-		tprec := p.prec
-		p.next()
-		t.X = x
-		t.Y = p.binaryExpr(nil, tprec)
-		x = t
+	for (p.tok == _Operator || p.tok == _Star || p.tok == _Pipe) && p.prec > prec {
+		if p.tok == _Pipe {
+			t := new(CallExpr)
+			t.pos = p.pos()
+			tprec := p.prec
+			t.ArgList = []Expr{x}
+			p.next()
+			t.Fun = p.binaryExpr(nil, tprec)
+			x = t
+		} else {
+			t := new(Operation)
+			t.pos = p.pos()
+			t.Op = p.op
+			tprec := p.prec
+			p.next()
+			t.X = x
+			t.Y = p.binaryExpr(nil, tprec)
+			x = t
+		}
 	}
 	return x
 }
